@@ -4,30 +4,49 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
- * A JPanel GUI for representing a Route. This Route is shown as a list of
- * GeoSegments. In addition, walking directions and driving directions for
- * traversing this route are shown.
- * <p>
- * A figure showing this GUI can be found in homework assignment #1.
+ * A JPanel GUI for representing a Chat.
+ * holds multiple chat boxes for different users
  */
 public class ChatGui extends JPanel{
 
-    // some of the controls contained in this
+    // Abs. Function
+    // 	represents a Chat control interface.
+    // 	all buttons are under buttonsPanel.
+    //	all chatboxes are under chatBoxes.
+    //
+    // Rep. Invariant:
+    //  no 2 users have the same ID - checked cause userIDs are saved in a set
+    //  no attribute is null
+    //  usersAmount >= 0
+
     private Chat chat;
     JFrame frame;
     JPanel buttonsPanel = new JPanel();
     JPanel chatBoxes = new JPanel();
     FontsPopup fontsPopup;
     int usersAmount;
+    Set<Integer> userIDs;
 
+    void checkRep(){
+        assert (chat != null);
+        assert (buttonsPanel != null);
+        assert (chatBoxes != null);
+        assert (fontsPopup != null);
+        assert (fontsPopup != userIDs);
+        assert (usersAmount >= 0);
+    }
 
+    /**
+     * creates a new ChatGui
+     * @param frame - frame that owns this JPanel
+     */
     public ChatGui(JFrame frame) {
         chat = new Chat();
         usersAmount = 0;
+        userIDs = new HashSet<>();
 
         this.frame = frame;
         this.frame.setVisible(true);
@@ -40,7 +59,7 @@ public class ChatGui extends JPanel{
         fontsPopup.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         fontsPopup.pack();
 
-
+        // listen to "Normal" button
         JButton normalButton = new JButton("Normal");
         normalButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -49,6 +68,7 @@ public class ChatGui extends JPanel{
             }
         });
 
+        // listen to "Bold" button
         JButton boldButton = new JButton("Bold");
         boldButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +76,7 @@ public class ChatGui extends JPanel{
             }
         });
 
+        // listen to "Choose Font" button
         JButton fontButton = new JButton("Choose Font");
         fontButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -70,23 +91,55 @@ public class ChatGui extends JPanel{
         chatBoxes.setLayout(new GridLayout(3,3));
         this.add(chatBoxes);
         this.add(buttonsPanel);
+        checkRep();
     }
 
+    /**
+     * changes text font
+     * @param fontName - requested font
+     * @modifies - chat
+     * @return
+     */
+    protected boolean validateChat(Chat chat){
+        checkRep();
+        return (this.chat.equals(chat));
+    }
+    /**
+     * changes text font
+     * @param fontName - requested font
+     * @modifies - chat
+     */
     public void changeFont(String fontName){
+        checkRep();
         chat.changeFont(fontName);
+        checkRep();
     }
 
+    /**
+     * changes text font
+     * @param isBold
+     * @modifies - chat
+     */
     public void setBold(int isBold){
+        checkRep();
         chat.setBold(isBold);
+        checkRep();
     }
 
+    /**
+     * adds a new user chat box for agile usage
+     * @param userName
+     */
     public void addUserToChat(String userName){
+        checkRep();
         User user = new User(usersAmount,userName);
-        UserDialog dialog = new UserDialog(user, chat);
+        userIDs.add(usersAmount);
+        UserDialog dialog = new UserDialog(user, chat, this);
         chatBoxes.add(dialog);
         chat.addObserver(dialog);
         frame.pack();
         usersAmount++;
+        checkRep();
     }
 
 

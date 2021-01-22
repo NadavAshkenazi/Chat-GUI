@@ -13,6 +13,16 @@ import java.util.Iterator;
  * allows viewing correspondence and entering text
  */
 class UserDialog extends JPanel implements Observer {
+
+    // Abs. Function
+    // 	represents a Chat box of a certain user.
+    //  chat is a reference to tha main chat
+    //  user is the owner
+
+    // Rep. Invariant:
+    //  no attribute is Null
+    //  chat points to the main chat
+
     private static final int ENTER = 10;
     private static final long serialVersionUID = 1L;
 
@@ -21,15 +31,25 @@ class UserDialog extends JPanel implements Observer {
 
     private Chat chat;
     private User user;
+    ChatGui parent;
 
+    private void checkRep(){
+        assert (textArea != null);
+        assert (textArea != null);
+        assert (textArea != null);
+        assert (textArea != null);
+        assert (textArea != null);
+        assert (parent.validateChat(this.chat));
+    }
     /**
      * creates a new UserDialog
      * @param user - user that owns this particular panel
      * @param chat - chat to listen to
      */
-    public UserDialog(User user, Chat chat){
+    public UserDialog(User user, Chat chat,ChatGui parent){
         this.user = user;
         this.chat = chat;
+        this.parent = parent;
 
         textArea = new JTextPane();
         textArea.setEditable(false);
@@ -45,7 +65,7 @@ class UserDialog extends JPanel implements Observer {
         lblTextInsertion.setLabelFor(textInsertion);
 
 
-
+        //listen to enter pressing and insert line to chat
         textInsertion.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent keyEvent) {
@@ -59,6 +79,7 @@ class UserDialog extends JPanel implements Observer {
 
             }
         });
+
         // arrange components on grid
         this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         GridBagLayout gridbag = new GridBagLayout();
@@ -99,9 +120,15 @@ class UserDialog extends JPanel implements Observer {
         gridbag.setConstraints(textInsertion, c);
         this.add(textInsertion);
 
+        checkRep();
     }
 
+    /**
+     * when notified by chat, updates the correspondence
+     * @ modifies: textArea
+     */
     public void update() {
+        checkRep();
         textArea.setText("");
         StyledDocument doc = textArea.getStyledDocument();
 
@@ -125,5 +152,6 @@ class UserDialog extends JPanel implements Observer {
             try { doc.insertString(doc.getLength(), line.toString(),currentStyle); }
             catch (BadLocationException e){}
         }
+        checkRep();
     }
 }

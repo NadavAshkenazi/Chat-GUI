@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"chatPackage","l":"Chat"},{"p":"chatPackage","l":"ChatGui"},{"p":"chatPackage","l":"ChatLine"},{"p":"chatPackage","l":"FontsPopup"},{"p":"chatPackage","l":"Observer"},{"p":"chatPackage","l":"User"},{"p":"chatPackage","l":"UserDialog"}];updateSearchResults();
