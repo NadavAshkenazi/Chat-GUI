@@ -18,17 +18,16 @@ public class ChatGui extends JPanel{
 
     // some of the controls contained in this
     private Chat chat;
-    private Map<User, JFrame> dialogs;
     JFrame frame;
     JPanel buttonsPanel = new JPanel();
     JPanel chatBoxes = new JPanel();
     FontsPopup fontsPopup;
+    int usersAmount;
 
 
     public ChatGui(JFrame frame) {
         chat = new Chat();
-        dialogs = new HashMap<>();
-
+        usersAmount = 0;
 
         this.frame = frame;
         this.frame.setVisible(true);
@@ -84,12 +83,12 @@ public class ChatGui extends JPanel{
     }
 
     public void addUserToChat(String userName){
-        User user = new User(dialogs.size(),userName);
+        User user = new User(usersAmount,userName);
         UserDialog dialog = new UserDialog(user, chat, frame);
         chatBoxes.add(dialog);
-        dialogs.put(user,frame);
         chat.addObserver(dialog);
         frame.pack();
+        usersAmount++;
     }
 
 
@@ -103,7 +102,6 @@ public class ChatGui extends JPanel{
         gui.addUserToChat("Alon");
         gui.addUserToChat("Ofek");
         gui.addUserToChat("Benjamin");
-        gui.addUserToChat("Dor");
 
     }
 }
