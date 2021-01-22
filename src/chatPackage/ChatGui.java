@@ -23,8 +23,7 @@ public class ChatGui extends JPanel{
     private Map<User, JFrame> dialogs;
     JFrame frame;
     JPanel buttonsPanel = new JPanel();
-    int isBold = Font.PLAIN;
-    String font = "Arial";
+    JPanel chatBoxes = new JPanel();
     FontsPopup fontsPopup;
 
 
@@ -36,10 +35,9 @@ public class ChatGui extends JPanel{
         this.frame = frame;
         this.frame.setVisible(true);
 
-        this.setLayout(new GridLayout(3,3));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.pack();
-        this.frame.setLayout(new BorderLayout());
 
         fontsPopup = new FontsPopup(frame, this, chat);
         fontsPopup.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -70,9 +68,13 @@ public class ChatGui extends JPanel{
             }
         });
 
-        this.add(normalButton);
-        this.add(boldButton);
-        this.add(fontButton);
+        buttonsPanel.add(normalButton);
+        buttonsPanel.add(boldButton);
+        buttonsPanel.add(fontButton);
+
+        chatBoxes.setLayout(new GridLayout(3,3));
+        this.add(chatBoxes);
+        this.add(buttonsPanel);
     }
 
     public void changeFont(String fontName){
@@ -86,7 +88,7 @@ public class ChatGui extends JPanel{
     public void addUserToChat(String userName){
         User user = new User(dialogs.size(),userName);
         UserDialog dialog = new UserDialog(user, chat, frame);
-        this.add(dialog);
+        chatBoxes.add(dialog);
         dialogs.put(user,frame);
         chat.addObserver(dialog);
         frame.pack();
