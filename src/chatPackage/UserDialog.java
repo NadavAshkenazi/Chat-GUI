@@ -15,29 +15,20 @@ public class UserDialog extends JPanel implements Observer {
 
     private JTextPane textArea;
     private JTextPane textInsertion;
-    JPanel buttonsPanel = new JPanel();
 
     private Chat chat;
     private User user;
-
-    int isBold = Font.PLAIN;
-    String font = "Arial";
-    FontsPopup fontsPopup;
 
 
     public UserDialog(User user, Chat chat, JFrame frame){
         this.user = user;
         this.chat = chat;
 
-        fontsPopup = new FontsPopup(frame, this);
-        fontsPopup.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        fontsPopup.pack();
-
         textArea = new JTextPane();
         textArea.setEditable(false);
         JScrollPane scrlTextArea = new JScrollPane(textArea);
         scrlTextArea.setPreferredSize(new Dimension(400, 70));
-        JLabel lblTextArea = new JLabel(" Chat:");
+        JLabel lblTextArea = new JLabel(user.getName() + " Chat:");
         lblTextArea.setLabelFor(textArea);
 
         textInsertion = new JTextPane();
@@ -47,29 +38,6 @@ public class UserDialog extends JPanel implements Observer {
         lblTextInsertion.setLabelFor(textInsertion);
 
 
-        JButton normalButton = new JButton("Normal");
-        normalButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                isBold = Font.PLAIN;
-                font = "Arial";
-                update();
-            }
-        });
-
-        JButton boldButton = new JButton("Bold");
-        boldButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                isBold = isBold + 1 % 2;
-                update();
-            }
-        });
-
-        JButton fontButton = new JButton("Choose Font");
-        fontButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fontsPopup.setVisible(true);
-            }
-        });
 
         textInsertion.addKeyListener(new KeyAdapter() {
             @Override
@@ -124,18 +92,6 @@ public class UserDialog extends JPanel implements Observer {
         gridbag.setConstraints(textInsertion, c);
         this.add(textInsertion);
 
-        c.gridx = 0;
-        c.gridy = 9;
-        c.gridwidth = 2;
-        c.gridheight = 1;
-        c.insets = new Insets(0,20,20,0);
-        gridbag.setConstraints(buttonsPanel, c);
-        this.add(buttonsPanel);
-
-        buttonsPanel.add(normalButton);
-        buttonsPanel.add(boldButton);
-        buttonsPanel.add(fontButton);
-
     }
 
     public void update() {
@@ -144,13 +100,11 @@ public class UserDialog extends JPanel implements Observer {
 
         Style owner = textArea.addStyle("owner", null);
         StyleConstants.setForeground(owner, Color.GREEN);
-//        StyleConstants.setBold(owner, isBold);
 
         Style otherUser = textArea.addStyle("otherUser", null);
         StyleConstants.setForeground(otherUser, Color.black);
-//        StyleConstants.setBold(otherUser, isBold);
 
-        textArea.setFont(new Font(font, isBold, 12));
+        textArea.setFont(new Font(chat.getFont(), chat.getBold(), 12));
 
         Iterator it = chat.getChatLines();
         Style currentStyle;

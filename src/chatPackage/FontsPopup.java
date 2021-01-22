@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.PrivateKey;
 
 
 public class FontsPopup extends JDialog {
@@ -11,22 +12,24 @@ public class FontsPopup extends JDialog {
     private static final long serialVersionUID = 1L;
 
     // the RouteDirectionsGUI that this JDialog was opened from
-    private UserDialog parent;
+    private ChatGui parent;
 
     // a control contained in this
     private JList<String> fonts;
+
+    private Chat chat;
 
     /**
      * Creates a new GeoSegmentsDialog JDialog.
      * @effects Creates a new GeoSegmentsDialog JDialog with owner-frame
      * 			owner and parent pnlParent
      */
-    public FontsPopup(Frame owner, UserDialog pnlParent) {
+    public FontsPopup(Frame owner, ChatGui pnlParent , Chat chat) {
         // create a modal JDialog with the an owner Frame (a modal window
         // in one that doesn't allow other windows to be active at the
         // same time).
         super(owner, "Please choose a Font", true);
-
+        this.chat = chat;
         this.parent = pnlParent;
 
 
@@ -41,8 +44,8 @@ public class FontsPopup extends JDialog {
         btnAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                parent.font = (fonts.getSelectedValue());
-                parent.update();
+                parent.changeFont(fonts.getSelectedValue());
+                chat.notifyObservers();
             }
         });
 
