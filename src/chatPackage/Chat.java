@@ -29,6 +29,7 @@ public class Chat {
      */
     public void changeFont(String fontName){
         this.font = fontName;
+        notifyObservers();
     }
 
     /**
@@ -43,6 +44,7 @@ public class Chat {
      */
     public void setBold(int isBold){
         this.isBold = isBold;
+        notifyObservers();
     }
 
     /**
@@ -50,15 +52,6 @@ public class Chat {
      */
     public int isBold(){
         return this.isBold;
-    }
-
-    /**
-     * method that notifies all Dialog Boxes that a change to the correspondence or settings was made
-     */
-    public void notifyObservers(){
-        for (UserDialog dialog : observers){
-            dialog.update();
-        }
     }
 
     /**
@@ -80,6 +73,15 @@ public class Chat {
     public Iterator<ChatLine> getChatLines() {
         ArrayList<ChatLine>newLines = new ArrayList<ChatLine>(this.lines);
         return newLines.iterator();
+    }
+
+    /**
+     * method that notifies all Dialog Boxes that a change to the correspondence or settings was made
+     */
+    public void notifyObservers(){
+        for (UserDialog dialog : observers){
+            dialog.update();
+        }
     }
 
 

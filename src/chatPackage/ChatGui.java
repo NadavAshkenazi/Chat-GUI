@@ -36,7 +36,7 @@ public class ChatGui extends JPanel{
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.pack();
 
-        fontsPopup = new FontsPopup(frame, this, chat);
+        fontsPopup = new FontsPopup(frame, this);
         fontsPopup.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         fontsPopup.pack();
 
@@ -44,9 +44,8 @@ public class ChatGui extends JPanel{
         JButton normalButton = new JButton("Normal");
         normalButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                chat.setBold(Font.PLAIN);
-                chat.changeFont("Arial");
-                chat.notifyObservers();
+                setBold(Font.PLAIN);
+                changeFont("Arial");
             }
         });
 
@@ -54,7 +53,6 @@ public class ChatGui extends JPanel{
         boldButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 chat.setBold((chat.isBold() + 1) % 2);
-                chat.notifyObservers();
             }
         });
 
@@ -84,7 +82,7 @@ public class ChatGui extends JPanel{
 
     public void addUserToChat(String userName){
         User user = new User(usersAmount,userName);
-        UserDialog dialog = new UserDialog(user, chat, frame);
+        UserDialog dialog = new UserDialog(user, chat);
         chatBoxes.add(dialog);
         chat.addObserver(dialog);
         frame.pack();
@@ -102,6 +100,7 @@ public class ChatGui extends JPanel{
         gui.addUserToChat("Alon");
         gui.addUserToChat("Ofek");
         gui.addUserToChat("Benjamin");
+        gui.addUserToChat("Dor");
 
     }
 }

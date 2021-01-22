@@ -4,8 +4,8 @@ package chatPackage;
  * a Class that represents a chat user
  */
 class User {
-    private int ID;
-    private String name;
+    private final int ID;
+    private final String name;
 
     /**
      * creates a new User

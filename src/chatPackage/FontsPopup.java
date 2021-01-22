@@ -6,26 +6,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.PrivateKey;
 
-
+/**
+ * a class for a popup font list for choosing
+ */
 public class FontsPopup extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
-    // the RouteDirectionsGUI that this JDialog was opened from
     private ChatGui parent;
 
-    // a control contained in this
     private JList<String> fonts;
 
-    private Chat chat;
-
-
-    public FontsPopup(Frame owner, ChatGui pnlParent , Chat chat) {
-        // create a modal JDialog with the an owner Frame (a modal window
-        // in one that doesn't allow other windows to be active at the
-        // same time).
+    /**
+     * creates a new FontsPopup
+     * @param owner - Frame that owns this JDialog
+     * @param pnlParent -  JPanel to notify after action
+     */
+    public FontsPopup(Frame owner, ChatGui pnlParent) {
         super(owner, "Please choose a Font", true);
-        this.chat = chat;
         this.parent = pnlParent;
 
 
@@ -36,12 +34,12 @@ public class FontsPopup extends JDialog {
             }
         });
 
+        // listen to font choosing and notify parent
         JButton btnAdd = new JButton("Choose");
         btnAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 parent.changeFont(fonts.getSelectedValue());
-                chat.notifyObservers();
             }
         });
 
@@ -56,6 +54,8 @@ public class FontsPopup extends JDialog {
         JLabel lblSegments = new JLabel("Available Fonts:");
         lblSegments.setLabelFor(fonts);
 
+
+        //set up greed view
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         this.setLayout(gridbag);

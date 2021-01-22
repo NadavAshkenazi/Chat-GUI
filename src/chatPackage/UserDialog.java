@@ -9,7 +9,8 @@ import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
 /**
- *
+ * a class that represents the user interface for a single user
+ * allows viewing correspondence and entering text
  */
 class UserDialog extends JPanel implements Observer {
     private static final int ENTER = 10;
@@ -21,8 +22,12 @@ class UserDialog extends JPanel implements Observer {
     private Chat chat;
     private User user;
 
-
-    public UserDialog(User user, Chat chat, JFrame frame){
+    /**
+     * creates a new UserDialog
+     * @param user - user that owns this particular panel
+     * @param chat - chat to listen to
+     */
+    public UserDialog(User user, Chat chat){
         this.user = user;
         this.chat = chat;
 
