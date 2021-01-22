@@ -19,11 +19,7 @@ public class FontsPopup extends JDialog {
 
     private Chat chat;
 
-    /**
-     * Creates a new GeoSegmentsDialog JDialog.
-     * @effects Creates a new GeoSegmentsDialog JDialog with owner-frame
-     * 			owner and parent pnlParent
-     */
+
     public FontsPopup(Frame owner, ChatGui pnlParent , Chat chat) {
         // create a modal JDialog with the an owner Frame (a modal window
         // in one that doesn't allow other windows to be active at the

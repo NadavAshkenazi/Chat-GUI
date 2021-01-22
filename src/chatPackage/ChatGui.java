@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,7 +54,7 @@ public class ChatGui extends JPanel{
         JButton boldButton = new JButton("Bold");
         boldButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                chat.setBold((chat.getBold() + 1) % 2);
+                chat.setBold((chat.isBold() + 1) % 2);
                 chat.notifyObservers();
             }
         });
@@ -96,7 +94,7 @@ public class ChatGui extends JPanel{
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Chat control");
+        JFrame frame = new JFrame("Chat Control Panel");
         Container contentPane = frame.getContentPane();
         ChatGui gui = new ChatGui(frame);
         contentPane.add(gui);
@@ -104,7 +102,8 @@ public class ChatGui extends JPanel{
         gui.addUserToChat("Shlomi");
         gui.addUserToChat("Alon");
         gui.addUserToChat("Ofek");
-        gui.addUserToChat("Ben");
+        gui.addUserToChat("Benjamin");
+        gui.addUserToChat("Dor");
 
     }
 }

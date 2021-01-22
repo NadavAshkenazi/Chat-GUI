@@ -3,13 +3,15 @@ package chatPackage;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
-public class UserDialog extends JPanel implements Observer {
+/**
+ *
+ */
+class UserDialog extends JPanel implements Observer {
     private static final int ENTER = 10;
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +30,7 @@ public class UserDialog extends JPanel implements Observer {
         textArea.setEditable(false);
         JScrollPane scrlTextArea = new JScrollPane(textArea);
         scrlTextArea.setPreferredSize(new Dimension(400, 70));
-        JLabel lblTextArea = new JLabel(user.getName() + " Chat:");
+        JLabel lblTextArea = new JLabel(user.getName() + "s Chat:");
         lblTextArea.setLabelFor(textArea);
 
         textInsertion = new JTextPane();
@@ -99,12 +101,12 @@ public class UserDialog extends JPanel implements Observer {
         StyledDocument doc = textArea.getStyledDocument();
 
         Style owner = textArea.addStyle("owner", null);
-        StyleConstants.setForeground(owner, Color.GREEN);
+        StyleConstants.setForeground(owner, Color.black);
 
         Style otherUser = textArea.addStyle("otherUser", null);
-        StyleConstants.setForeground(otherUser, Color.black);
+        StyleConstants.setForeground(otherUser, Color.green);
 
-        textArea.setFont(new Font(chat.getFont(), chat.getBold(), 12));
+        textArea.setFont(new Font(chat.getFont(), chat.isBold(), 12));
 
         Iterator it = chat.getChatLines();
         Style currentStyle;
